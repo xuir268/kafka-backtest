@@ -1,0 +1,11 @@
+id: 003-multi-partition-merge
+spec_sections: [5.2, 7]
+description: >
+  Two partitions with timestamp ties. Partition 0 has offset 102 with an
+  earlier timestamp than offset 101. Partition 1 offset 500 is LogAppendTime
+  and ties with partition 0 at timestamp 1000.
+input:
+  partition 0: [{offset: 100, ts: 1000, value: a}, {offset: 101, ts: 1005, value: b}, {offset: 102, ts: 1000, value: e}]
+  partition 1: [{offset: 500, ts: 1000, value: c, log_append_time: true}, {offset: 501, ts: 1002, value: d}]
+expected: expected/delivery-order.txt
+reference_test: cli/internal/fixture/fixture_test.go (TestVector003DeliveryOrder)
