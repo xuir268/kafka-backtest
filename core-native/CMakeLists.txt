@@ -1,4 +1,15 @@
 cmake_minimum_required(VERSION 3.20)
-project(kbt_core_native LANGUAGES CXX)
-# C ABI only. Hostile-input hardening per spec section 5.4.
-# TODO: fixture reader, deterministic merge, diff core
+project(kbt_core_native VERSION 0.1.0 LANGUAGES CXX)
+
+add_library(kbt_core SHARED src/segment.cpp)
+target_compile_features(kbt_core PRIVATE cxx_std_17)
+target_include_directories(kbt_core PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+set_target_properties(kbt_core PROPERTIES CXX_VISIBILITY_PRESET hidden VISIBILITY_INLINES_HIDDEN YES)
+
+include(CTest)
+if(BUILD_TESTING)
+    add_executable(kbt_core_test tests/segment_test.cpp)
+    target_compile_features(kbt_core_test PRIVATE cxx_std_17)
+    target_link_libraries(kbt_core_test PRIVATE kbt_core)
+    add_test(NAME kbt_core_test COMMAND kbt_core_test)
+endif()
