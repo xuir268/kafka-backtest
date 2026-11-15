@@ -4,3 +4,5 @@ Replay captured Kafka traffic through a candidate job version and diff its outpu
 
 The project's pre-Git timeline is recorded in [project history](docs/project-history.md).
 Git history began in November 2026; the earlier work was not committed at the time.
+Read the code in [retrospective walkthrough](docs/retrospective-walkthrough.md)
+order: Java implementation, Java tests, C++ implementation, then C++ tests.
